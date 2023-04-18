@@ -70,6 +70,10 @@ async fn main() {
         }
     }
 
+    if phonetic.is_empty() {
+        phonetic = "Unavailable".to_string();
+    }
+
     table.add_row(row![&body[0].word, phonetic, &body[0].meanings[0].partOfSpeech, &body[0].meanings[0].definitions[0].definition]);
 
     if body.len() > 1 {
