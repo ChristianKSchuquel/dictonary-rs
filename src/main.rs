@@ -58,21 +58,21 @@ async fn main() {
     let mut table = prettytable::Table::new();
     table.add_row(row![Fgb => "Word", "Phonetic", "Class", "Definitions"]);
 
-    if body[0].phonetics.is_empty() {
-        table.add_row(row![&body[0].word, "Unavailable", &body[0].meanings[0].partOfSpeech, &body[0].meanings[0].definitions[0].definition]);
-    }
-
     let mut phonetic = String::new();
 
-    for x in &body[0].phonetics {
-        if !x.text.is_none() {
-            phonetic = x.text.clone().expect("couldn't get Phonetic");
-        }
-    }
-
-    if phonetic.is_empty() {
+    if body[0].phonetics.is_empty() {
         phonetic = "Unavailable".to_string();
-    }
+    } else {
+        for x in &body[0].phonetics {
+            if !x.text.is_none() {
+                phonetic = x.text.clone().expect("couldn't get Phonetic");
+            }
+        }
+
+        if phonetic.is_empty() {
+            phonetic = "Unavailable".to_string();
+        }
+    } 
 
     table.add_row(row![&body[0].word, phonetic, &body[0].meanings[0].partOfSpeech, &body[0].meanings[0].definitions[0].definition]);
 
